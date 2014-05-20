@@ -20,35 +20,31 @@ import javax.annotation.Resource;
 @Configuration
 @EnableAutoConfiguration
 @EnableOAuth2Client
-@ComponentScan
+@ComponentScan(basePackages = { "org.cloudfoundry.community.servicebroker", "org.cloudfoundry.identity.uaa.servicebroker" })
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
-    @Configuration
-    protected static class OAuth2Config {
+    @Resource
+    @Qualifier("accessTokenRequest")
+    private AccessTokenRequest accessTokenRequest;
 
-        @Resource
-        @Qualifier("accessTokenRequest")
-        private AccessTokenRequest accessTokenRequest;
+    @Bean
+//    @Scope(value = "session", proxyMode = ScopedProxyMode.INTERFACES)
+    public OAuth2RestTemplate uaaRestTemplate() {
+        return new OAuth2RestTemplate(uaa(), new DefaultOAuth2ClientContext(accessTokenRequest));
+    }
 
-        @Bean
-        @Scope(value = "session", proxyMode = ScopedProxyMode.INTERFACES)
-        public OAuth2RestTemplate uaaRestTemplate() {
-            return new OAuth2RestTemplate(uaa(), new DefaultOAuth2ClientContext(accessTokenRequest));
-        }
-
-        @Bean
-        public ClientCredentialsResourceDetails uaa() {
-            ClientCredentialsResourceDetails uaa = new ClientCredentialsResourceDetails();
-            uaa.setId("uaa");
-            uaa.setClientId("admin");
-            uaa.setClientSecret("adminsecret");
-            uaa.setAccessTokenUri("http://localhost:8080/uaa/oauth/token");
-            uaa.setScope(Arrays.asList("clients.read", "clients.write"));
-            return uaa;
-        }
+    @Bean
+    public ClientCredentialsResourceDetails uaa() {
+        ClientCredentialsResourceDetails uaa = new ClientCredentialsResourceDetails();
+        uaa.setId("uaa");
+        uaa.setClientId("admin");
+        uaa.setClientSecret("adminsecret");
+        uaa.setAccessTokenUri("http://localhost:8080/uaa/oauth/token");
+        uaa.setScope(Arrays.asList("clients.read", "clients.write"));
+        return uaa;
     }
 }
