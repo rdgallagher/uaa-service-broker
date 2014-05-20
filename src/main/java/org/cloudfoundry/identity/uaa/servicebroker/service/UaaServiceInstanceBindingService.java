@@ -17,21 +17,31 @@ import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceBinding
 import org.cloudfoundry.community.servicebroker.model.ServiceInstance;
 import org.cloudfoundry.community.servicebroker.model.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.service.ServiceInstanceBindingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 
 /**
  * UAA implementation to bind services. Binding a service does the following:
- * - Provisions a client for the app with a pre-setup redirect URI
+ * - Retrieves the client details for the app
  */
 @Service
 public class UaaServiceInstanceBindingService implements ServiceInstanceBindingService {
+
+    @Autowired
+    private OAuth2RestTemplate uaaRestTemplate;
+
     @Override
     public ServiceInstanceBinding createServiceInstanceBinding(String bindingId,
                                                                ServiceInstance serviceInstance,
                                                                String serviceId,
                                                                String planId,
-                                                               String addGuid)
+                                                               String appGuid)
             throws ServiceInstanceBindingExistsException, ServiceBrokerException {
+
+        // TODO: Return details for existing app client
+
 
         return null;
     }
