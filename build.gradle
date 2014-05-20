@@ -16,6 +16,7 @@ apply plugin: 'war'
 ext {
     springBootCfServiceBrokerVersion = '2.1'
     springBootVersion = '1.0.2.RELEASE'
+    springSecurityOAuthVersion = '2.0.1.RELEASE'
     baseName = 'uaa-service-broker'
     version = '1.0'
 }
@@ -37,6 +38,7 @@ configurations {
 dependencies {
     compile("org.cloudfoundry:spring-boot-cf-service-broker:${springBootCfServiceBrokerVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}")
+    compile("org.springframework.security.oauth:spring-security-oauth2:${springSecurityOAuthVersion}")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
     testCompile("org.cloudfoundry:spring-boot-cf-service-broker-tests:${springBootCfServiceBrokerVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
