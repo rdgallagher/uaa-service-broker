@@ -37,7 +37,7 @@ public class CatalogConfig {
 	private Map<String,Object> getServiceDefinitionMetadata() {
 		Map<String,Object> sdMetadata = new HashMap<String,Object>();
 		sdMetadata.put("displayName", "UAA");
-		sdMetadata.put("imageUrl","http://info.mongodb.com/rs/mongodb/images/MongoDB_Logo_Full.png");
+		sdMetadata.put("imageUrl","http://cdn.ebaumsworld.com/picture/digiti/guard-cat.jpg");
 		sdMetadata.put("longDescription","User Account and Authentication Service");
 		sdMetadata.put("providerDisplayName","Pivotal");
 		sdMetadata.put("documentationUrl","https://github.com/cloudfoundry/uaa");
